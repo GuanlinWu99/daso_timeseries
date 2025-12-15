@@ -1,0 +1,39 @@
+ALGORITHM:
+  NAME: "Supervised"
+
+MODEL:
+  BACKBONE: "timeseries_cnn"
+  WIDTH: 2
+  NUM_CLASSES: 7
+  INPUT_FEATURES: 35
+  SEQUENCE_LENGTH: 25
+
+DATASET:
+  BUILDER: "build_alfa_dataset"
+  NAME: "alfa"
+  ROOT: "./ALFA"
+  NUM_VALID: 500
+  ALFA:
+    NUM_LABELED_HEAD: 500
+    IMB_FACTOR_L: 1
+    NUM_UNLABELED_HEAD: 0
+    IMB_FACTOR_UL: 1
+    TEST_SPLIT: 0.2
+  TRANSFORM:
+    STRONG_AUG: False
+
+SOLVER:
+  IMS_PER_BATCH: 32
+  MAX_ITER: 20000
+  BASE_LR: 0.001
+  OPTIM_NAME: "Adam"
+  ADAM:
+    WEIGHT_DECAY: 0.0001
+
+PERIODS:
+  EVAL: 200
+  CHECKPOINT: 2000
+  LOG: 50
+
+OUTPUT_DIR: "outputs/alfa/supervised"
+SEED: 42

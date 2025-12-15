@@ -4,6 +4,7 @@ from yacs.config import CfgNode
 from .classifier import Classifier
 from .heads.rotation_head import RotationHead
 from .wrn import build_wrn
+from .timeseries_cnn import build_timeseries_cnn
 
 
 class SemiModel(nn.Module):
@@ -13,8 +14,15 @@ class SemiModel(nn.Module):
         super(SemiModel, self).__init__()
         with_rotation_head = cfg.MODEL.WITH_ROTATION_HEAD
 
-        # feature extractor
-        self.encoder = build_wrn(cfg)
+        # feature extractor - support multiple backbone types
+        backbone_type = cfg.MODEL.BACKBONE if hasattr(cfg.MODEL, 'BACKBONE') else 'wrn'
+
+        if backbone_type == 'timeseries_cnn':
+            self.encoder = build_timeseries_cnn(cfg)
+        else:
+            # Default to WideResNet for image data
+            self.encoder = build_wrn(cfg)
+
         num_classes = self.encoder.num_classes
         out_features = self.encoder.out_features
 

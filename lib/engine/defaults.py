@@ -20,7 +20,7 @@ def default_argument_parser():
         argparse.ArgumentParser:
     """
     parser = argparse.ArgumentParser(description="")
-    parser.add_argument("--config-file", default="", metavar="FILE", help="path to config file")
+    parser.add_argument("--config-file", default="configs/cifar10/fixmatch_daso.yaml", metavar="FILE", help="path to config file")
     parser.add_argument("--eval-only", action="store_true", help="perform evaluation only")
     parser.add_argument(
         "opts",
@@ -104,8 +104,10 @@ def _get_experiment_name(cfg: CfgNode, seed: int) -> str:
         data_cfg = cfg.DATASET.CIFAR100
     elif dataset_name == "stl10":
         data_cfg = cfg.DATASET.STL10
+    elif dataset_name == "alfa":
+        data_cfg = cfg.DATASET.ALFA
     else:
-        raise ValueError
+        raise ValueError(f"Unknown dataset: {dataset_name}")
 
     num_l_head = data_cfg.NUM_LABELED_HEAD
     num_ul_head = data_cfg.NUM_UNLABELED_HEAD

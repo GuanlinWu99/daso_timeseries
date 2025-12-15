@@ -1,6 +1,7 @@
 from yacs.config import CfgNode
 
 from .transforms import Augmentation, GeneralizedSSLTransform
+from .timeseries_transforms import get_timeseries_transforms
 
 
 def build_transforms(cfg: CfgNode, dataset: str) -> tuple:
@@ -9,6 +10,13 @@ def build_transforms(cfg: CfgNode, dataset: str) -> tuple:
 
     strong_aug = cfg.DATASET.TRANSFORM.STRONG_AUG
     resolution = cfg.DATASET.RESOLUTION
+
+    # Handle time series dataset (ALFA)
+    if dataset == "alfa":
+        l_train = get_timeseries_transforms(strong_aug=False, for_unlabeled=False)
+        ul_train = get_timeseries_transforms(strong_aug=strong_aug, for_unlabeled=True) if with_unlabeled else None
+        eval_aug = get_timeseries_transforms(strong_aug=False, for_unlabeled=False)
+        return l_train, ul_train, eval_aug
 
     aug = Augmentation
     if dataset == "cifar10":

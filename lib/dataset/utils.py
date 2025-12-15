@@ -129,7 +129,8 @@ def get_data_config(cfg):
     return {
         "cifar10": cfg.DATASET.CIFAR10,
         "cifar100": cfg.DATASET.CIFAR100,
-        "stl10": cfg.DATASET.STL10
+        "stl10": cfg.DATASET.STL10,
+        "alfa": cfg.DATASET.ALFA
     }[cfg.DATASET.NAME]
 
 

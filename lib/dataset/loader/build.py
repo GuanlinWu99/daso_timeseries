@@ -10,6 +10,7 @@ from typing import Tuple
 from ..cifar10 import build_cifar10_dataset  # noqa
 from ..cifar100 import build_cifar100_dataset  # noqa
 from ..stl10 import build_stl10_dataset  # noqa
+from ..alfa import build_alfa_dataset  # noqa
 from .class_aware_sampler import ClassAwareSampler
 
 

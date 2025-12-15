@@ -18,7 +18,7 @@ def accuracy(output: Tensor, target: Tensor, topk: Tuple[int] = (1, )) -> Union[
 
         res = []
         for k in topk:
-            correct_k = correct[:k].view(-1).float().sum(0, keepdim=True)
+            correct_k = correct[:k].reshape(-1).float().sum(0, keepdim=True)
             res.append(correct_k.mul_(100.0 / batch_size).item())
         if len(res) == 1:
             return res[0]

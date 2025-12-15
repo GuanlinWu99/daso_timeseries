@@ -8,8 +8,11 @@ _C.MISC.LOG_CLASSWISE = True
 # Model
 _C.MODEL = CN()
 _C.MODEL.NAME = "WRN"
+_C.MODEL.BACKBONE = "wrn"  # "wrn" for images, "timeseries_cnn" for time series
 _C.MODEL.WIDTH = 2
 _C.MODEL.NUM_CLASSES = 10
+_C.MODEL.INPUT_FEATURES = 35  # For time series data (ALFA dataset)
+_C.MODEL.SEQUENCE_LENGTH = 25  # For time series data (ALFA dataset)
 _C.MODEL.EMA_DECAY = 0.999
 _C.MODEL.EMA_WEIGHT_DECAY = 0.0
 _C.MODEL.WITH_ROTATION_HEAD = False
@@ -170,6 +173,13 @@ _C.DATASET.STL10.NUM_LABELED_HEAD = 450
 _C.DATASET.STL10.IMB_FACTOR_L = 10
 _C.DATASET.STL10.NUM_UNLABELED_HEAD = -1  # unknown unlabeled data
 _C.DATASET.STL10.IMB_FACTOR_UL = -1  # # unknown unlabeled data
+
+_C.DATASET.ALFA = CN()
+_C.DATASET.ALFA.NUM_LABELED_HEAD = 500  # Number of labeled samples per head class
+_C.DATASET.ALFA.IMB_FACTOR_L = 10  # Imbalance factor for labeled set
+_C.DATASET.ALFA.NUM_UNLABELED_HEAD = 1000  # Number of unlabeled samples per head class
+_C.DATASET.ALFA.IMB_FACTOR_UL = 10  # Imbalance factor for unlabeled set
+_C.DATASET.ALFA.TEST_SPLIT = 0.2  # Percentage of data for testing
 
 # transform parameters
 _C.DATASET.TRANSFORM = CN()
