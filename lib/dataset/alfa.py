@@ -88,30 +88,10 @@ def build_alfa_dataset(cfg: CfgNode) -> tuple():
     if algorithm == "Supervised":
         ul_train = None
 
-    # Whether to shuffle the class order
-    class_inds = list(range(num_classes))
-
-    # Make synthetic imbalance for labeled set
-    if imb_factor_l > 1:
-        l_train, class_inds = make_imbalance(
-            l_train, num_l_head, imb_factor_l, class_inds, seed=seed
-        )
-
-    # Make synthetic imbalance for unlabeled set
-    if ul_train is not None and imb_factor_ul > 1:
-        ul_train, class_inds = make_imbalance(
-            ul_train,
-            num_ul_head,
-            imb_factor_ul,
-            class_inds,
-            reverse_ul_dist=reverse_ul_dist,
-            seed=seed
-        )
-
     # Build transforms for time series data
     l_trans, ul_trans, eval_trans = build_transforms(cfg, "alfa")
 
-    # Create dataset objects (use default "images" key for compatibility)
+    # Create dataset objects
     if ul_train is not None:
         ul_train = ALFADataset(ul_train, transforms=ul_trans)
 
